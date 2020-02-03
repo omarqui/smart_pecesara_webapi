@@ -13,6 +13,9 @@ let express = require('express'),
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.get("/",(req,rep)=>{
+    rep.send("Smart Pecera Webapi");
+});
 
 var routes = require('./api/routes/configuracionRoutes'); //importing route
 routes(app); //register the route
