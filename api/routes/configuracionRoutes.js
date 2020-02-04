@@ -3,7 +3,8 @@ module.exports = function(app) {
 
   // todoList Routes
   app.route('/configuracion')
-    .get(configuracion.getConfig);
+    .get(configuracion.getConfig)
+    .post(configuracion.updateConfigFromModel);
       
   app.route('/configuracion/:proximaFechaMantenimiento/:horarioComida1/:horarioComida2')    
     .post(configuracion.updateConfig);

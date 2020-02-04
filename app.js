@@ -14,7 +14,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get("/",(req,rep)=>{
-    rep.send("Smart Pecera Webapi");
+    rep.send("<h1 style='margin-top:40px;text-align:center; font-family: Arial, sans-serif;'>"+
+             "Smart Pecera Webapi funcionado"+
+             "</h1>");
 });
 
 var routes = require('./api/routes/configuracionRoutes'); //importing route

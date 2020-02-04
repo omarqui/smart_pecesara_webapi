@@ -29,6 +29,21 @@ exports.updateConfig = function(req, res) {
 //   });
 };
 
+exports.updateConfigFromModel = function(req, res) {
+    let newConfig = req.body;
+
+    if (newConfig.fechaInternaReloj)
+        data.fechaInternaReloj = newConfig.fechaInternaReloj;
+    if (newConfig.proximaFechaMantenimiento)
+        data.proximaFechaMantenimiento = newConfig.proximaFechaMantenimiento;
+    if (newConfig.horarioComida1)
+        data.horarioComida1 = newConfig.horarioComida1;
+    if (newConfig.horarioComida2)
+        data.horarioComida2 = newConfig.horarioComida2;
+
+    res.send("Configuracion actualizada");
+};
+
 exports.updateFechaInterna = function(req, res) {
     if (req.params.fechaInternaReloj)
         data.fechaInternaReloj = req.params.fechaInternaReloj;    
