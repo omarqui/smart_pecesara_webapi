@@ -3,6 +3,11 @@ module.exports = function(app) {
 
   // todoList Routes
   app.route('/configuracion')
-    .get(configuracion.getConfig)
+    .get(configuracion.getConfig);
+      
+  app.route('/configuracion/:proximaFechaMantenimiento/:horarioComida1/:horarioComida2')    
     .post(configuracion.updateConfig);
+  
+  app.route('/configuracion/:fechaInternaReloj')    
+    .post(configuracion.updateFechaInterna);
 };
