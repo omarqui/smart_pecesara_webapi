@@ -57,6 +57,9 @@ exports.saveSensoresLogFromBody = function(req, res) {
     //     data.horarioComida1 = newLog.horarioComida1;
     // if (newLog.horarioComida2)
     //     data.horarioComida2 = newLog.horarioComida2;
+    const lastLog = data[data.length-1]
+    newLog._id = lastLog._id + 1;    
+    newLog.createdOn = new Date();
     data.push(newLog);
     res.send("Log sensores guardado");
 };
