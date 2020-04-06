@@ -20,6 +20,7 @@ app.get("/",(req,rep)=>{
 });
 
 var routes = require('./api/routes/configuracionRoutes'); //importing route
+var routes = require('./api/routes/sensoresLogRoutes'); //importing route
 routes(app); //register the route
 
 app.listen(port);

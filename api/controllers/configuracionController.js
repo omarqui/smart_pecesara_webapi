@@ -29,7 +29,7 @@ exports.updateConfig = function(req, res) {
 //   });
 };
 
-exports.updateConfigFromModel = function(req, res) {
+exports.updateConfigFromBody = function(req, res) {
     let newConfig = req.body;
 
     if (newConfig.fechaInternaReloj)
