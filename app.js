@@ -19,9 +19,10 @@ app.get("/",(req,rep)=>{
              "</h1>");
 });
 
-var routes = require('./api/routes/configuracionRoutes'); //importing route
-var routes = require('./api/routes/sensoresLogRoutes'); //importing route
-routes(app); //register the route
+var routesConfig = require('./api/routes/configuracionRoutes'); //importing route
+var routesSensores = require('./api/routes/sensoresLogRoutes'); //importing route
+routesConfig(app); //register the route
+routesSensores(app); //register the route
 
 app.listen(port);
 

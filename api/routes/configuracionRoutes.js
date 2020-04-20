@@ -8,10 +8,7 @@ module.exports = function(app) {
   app.route('/configuracion/estado')
     .get(configuracion.getEstadoConfiguracion)
     .post(configuracion.updateEstadoConfiguracion);    
-
-  app.route('/configuracion/:proximaFechaMantenimiento/:horarioComida1/:horarioComida2')    
-    .post(configuracion.updateConfig);
-  
+      
   app.route('/configuracion/:fechaInternaReloj')    
     .post(configuracion.updateFechaInterna);
 };
