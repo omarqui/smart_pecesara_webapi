@@ -1,6 +1,7 @@
 // var mongoose = require('mongoose'),
 //     configuracion = mongoose.model('Configuracion');
 let data = require("../constants/configuracion");
+let configPendienteActualizar = 0;
 
 exports.getConfig = function(req, res) {
 //   configuracion.find({}, function(err, config) {
@@ -9,24 +10,6 @@ exports.getConfig = function(req, res) {
 //     res.json(config);
 //   });
     res.json(data);
-};
-
-exports.updateConfig = function(req, res) {
-    if (req.params.proximaFechaMantenimiento)
-        data.proximaFechaMantenimiento = req.params.proximaFechaMantenimiento;
-    if (req.params.horarioComida1)
-        data.horarioComida1 = req.params.horarioComida1;
-    if (req.params.horarioComida2)
-        data.horarioComida2 = req.params.horarioComida2;
-    
-    res.send("Configuracion actualizada");
-//     var new_task = new configuracion(req.body);        
-//     new_task.save(function(err, task) {
-//     if (err)
-//       res.send(err);
-    
-//       res.json(task);
-//   });
 };
 
 exports.updateConfigFromBody = function(req, res) {
@@ -40,8 +23,21 @@ exports.updateConfigFromBody = function(req, res) {
         data.horarioComida1 = newConfig.horarioComida1;
     if (newConfig.horarioComida2)
         data.horarioComida2 = newConfig.horarioComida2;
+    if (newConfig.docificacionManual)
+        data.docificacionManual = newConfig.docificacionManual;
 
+    configPendienteActualizar = 1;
     res.send("Configuracion actualizada");
+};
+
+exports.getEstadoConfiguracion = function(req, res) {
+    res.json({configPendienteActualizar});
+};
+
+exports.updateEstadoConfiguracion = function(req, res) {    
+    configPendienteActualizar = req.body.configPendienteActualizar;
+    
+    res.send("Estado configuracion actualizada");
 };
 
 exports.updateFechaInterna = function(req, res) {
@@ -49,20 +45,4 @@ exports.updateFechaInterna = function(req, res) {
         data.fechaInternaReloj = req.params.fechaInternaReloj;    
     
     res.send("Fecha interna actualizada");
-//     var new_task = new configuracion(req.body);        
-//     new_task.save(function(err, task) {
-//     if (err)
-//       res.send(err);
-    
-//       res.json(task);
-//   });
 };
-
-
-// exports.update_a_task = function(req, res) {
-//   configuracion.findOneAndUpdate({_id: req.params.taskId}, req.body, {new: true}, function(err, task) {
-//     if (err)
-//       res.send(err);
-//     res.json(task);
-//   });
-// };
