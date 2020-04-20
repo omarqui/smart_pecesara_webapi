@@ -1,7 +1,7 @@
 // var mongoose = require('mongoose'),
 //     configuracion = mongoose.model('Configuracion');
 let data = require("../constants/configuracion");
-let configPendienteActualizar = 0;
+let pendienteActualizar = 0;
 
 exports.getConfig = function(req, res) {
 //   configuracion.find({}, function(err, config) {
@@ -26,16 +26,16 @@ exports.updateConfigFromBody = function(req, res) {
     if (newConfig.docificacionManual)
         data.docificacionManual = newConfig.docificacionManual;
 
-    configPendienteActualizar = 1;
+    pendienteActualizar = 1;
     res.send("Configuracion actualizada");
 };
 
 exports.getEstadoConfiguracion = function(req, res) {
-    res.json({configPendienteActualizar});
+    res.json({pendienteActualizar});
 };
 
 exports.updateEstadoConfiguracion = function(req, res) {    
-    configPendienteActualizar = req.body.configPendienteActualizar;
+    pendienteActualizar = req.body.pendienteActualizar;
     
     res.send("Estado configuracion actualizada");
 };
