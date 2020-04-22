@@ -27,7 +27,7 @@ exports.updateConfigFromBody = function(req, res) {
         data.docificacionManual = newConfig.docificacionManual;
 
     pendienteActualizar = 1;
-    res.send("Configuracion actualizada");
+    res.json(data);
 };
 
 exports.getEstadoConfiguracion = function(req, res) {
@@ -37,12 +37,12 @@ exports.getEstadoConfiguracion = function(req, res) {
 exports.updateEstadoConfiguracion = function(req, res) {    
     pendienteActualizar = req.body.pendienteActualizar;
     
-    res.send("Estado configuracion actualizada");
+    res.json({pendienteActualizar});
 };
 
 exports.updateFechaInterna = function(req, res) {
     if (req.params.fechaInternaReloj)
         data.fechaInternaReloj = req.params.fechaInternaReloj;    
     
-    res.send("Fecha interna actualizada");
+    res.json(data);
 };
