@@ -9,6 +9,7 @@ let express = require('express'),
 // mongoose.Promise = global.Promise;
 // mongoose.connect('mongodb://localhost/Tododb'); 
 
+var data = require("./api/constants/configuracion");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

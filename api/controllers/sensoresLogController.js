@@ -47,6 +47,7 @@ exports.getSensoresLogActual = function(req, res) {
 // };
 
 exports.saveSensoresLogFromBody = function(req, res) {
+    let configCtrl = require("./configuracionController");
     let newLog = req.body;
 
     // if (newLog.fechaInternaReloj)
@@ -61,6 +62,10 @@ exports.saveSensoresLogFromBody = function(req, res) {
     newLog._id = lastLog._id + 1;    
     newLog.createdOn = new Date();
     data.push(newLog);
-    res.send("Log sensores guardado");
+    
+    
+    // res.send("Log sensores guardado");
+    const { docificacionManual } = configCtrl.data;
+    res.json({docificacionManual});
 };
 

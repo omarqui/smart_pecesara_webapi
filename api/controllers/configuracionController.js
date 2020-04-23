@@ -3,6 +3,8 @@
 let data = require("../constants/configuracion");
 let pendienteActualizar = 0;
 
+exports.data = data;
+
 exports.getConfig = function(req, res) {
 //   configuracion.find({}, function(err, config) {
 //     if (err)
