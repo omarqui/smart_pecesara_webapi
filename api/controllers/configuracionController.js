@@ -1,7 +1,6 @@
 // var mongoose = require('mongoose'),
 //     configuracion = mongoose.model('Configuracion');
 let data = require("../constants/configuracion");
-let pendienteActualizar = 0;
 
 exports.data = data;
 
@@ -11,40 +10,42 @@ exports.getConfig = function(req, res) {
 //       res.send(err);
 //     res.json(config);
 //   });
-    res.json(data);
+    res.json(data.config);
 };
 
 exports.updateConfigFromBody = function(req, res) {
     let newConfig = req.body;
 
     if (newConfig.fechaInternaReloj)
-        data.fechaInternaReloj = newConfig.fechaInternaReloj;
+        data.config.fechaInternaReloj = newConfig.fechaInternaReloj;
     if (newConfig.proximaFechaMantenimiento)
-        data.proximaFechaMantenimiento = newConfig.proximaFechaMantenimiento;
+        data.config.proximaFechaMantenimiento = newConfig.proximaFechaMantenimiento;
     if (newConfig.horarioComida1)
-        data.horarioComida1 = newConfig.horarioComida1;
+        data.config.horarioComida1 = newConfig.horarioComida1;
     if (newConfig.horarioComida2)
-        data.horarioComida2 = newConfig.horarioComida2;
+        data.config.horarioComida2 = newConfig.horarioComida2;
     if (newConfig.docificacionManual)
-        data.docificacionManual = newConfig.docificacionManual;
+        data.config.docificacionManual = newConfig.docificacionManual;
 
-    pendienteActualizar = 1;
-    res.json(data);
+    data.pendienteActualizar = 1;
+    res.json(data.config);
 };
 
 exports.getEstadoConfiguracion = function(req, res) {
+    let {pendienteActualizar} = data;
     res.json({pendienteActualizar});
 };
 
 exports.updateEstadoConfiguracion = function(req, res) {    
-    pendienteActualizar = req.body.pendienteActualizar;
+    let {pendienteActualizar} = data;
+    data.pendienteActualizar = req.body.pendienteActualizar;
     
     res.json({pendienteActualizar});
 };
 
 exports.updateFechaInterna = function(req, res) {
     if (req.params.fechaInternaReloj)
-        data.fechaInternaReloj = req.params.fechaInternaReloj;    
+        data.config.fechaInternaReloj = req.params.fechaInternaReloj;    
     
-    res.json(data);
+    res.json(data.config);
 };
