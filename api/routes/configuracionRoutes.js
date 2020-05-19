@@ -7,7 +7,11 @@ module.exports = function(app) {
 
   app.route('/configuracion/estado')
     .get(configuracion.getEstadoConfiguracion)
-    .post(configuracion.updateEstadoConfiguracion);    
+    .post(configuracion.updateEstadoConfiguracion);   
+    
+  app.route('/configuracion/actuadores')
+    .get(configuracion.getEstadoActuadores)
+    .post(configuracion.updateEstadoActuadores);   
       
   app.route('/configuracion/:fechaInternaReloj')    
     .post(configuracion.updateFechaInterna);

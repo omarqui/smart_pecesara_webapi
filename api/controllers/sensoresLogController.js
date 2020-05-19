@@ -66,8 +66,8 @@ exports.saveSensoresLogFromBody = function(req, res) {
     
     // res.send("Log sensores guardado");
     const { docificacionManual } = configCtrl.data.config;
-    const { pendienteActualizar } = configCtrl.data;
+    const { pendienteActualizar, estadoActuadores } = configCtrl.data;
     
-    res.json({docificacionManual, pendienteActualizar});
+    res.json({docificacionManual, pendienteActualizar, estadoActuadores});
 };
 

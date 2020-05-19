@@ -27,7 +27,7 @@ exports.updateConfigFromBody = function(req, res) {
     if (newConfig.docificacionManual)
         data.config.docificacionManual = newConfig.docificacionManual;
 
-    data.pendienteActualizar = 1;
+    data.pendienteActualizar = 2;
     res.json(data.config);
 };
 
@@ -36,11 +36,23 @@ exports.getEstadoConfiguracion = function(req, res) {
     res.json({pendienteActualizar});
 };
 
+exports.getEstadoActuadores = function(req, res) {
+    let {estadoActuadores} = data;
+    res.json({estadoActuadores});
+};
+
+
 exports.updateEstadoConfiguracion = function(req, res) {    
     let {pendienteActualizar} = data;
     data.pendienteActualizar = req.body.pendienteActualizar;
     
     res.json({pendienteActualizar});
+};
+
+exports.updateEstadoActuadores = function(req, res) {        
+    data.estadoActuadores = req.body.estadoActuadores;
+    
+    res.json({estadoActuadores : data.estadoActuadores});
 };
 
 exports.updateFechaInterna = function(req, res) {

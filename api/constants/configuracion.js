@@ -6,7 +6,8 @@ let data = {
         horarioComida2: "18:00",
         docificacionManual: 0,
     },     
-    pendienteActualizar: 1
+    pendienteActualizar: 1,
+    estadoActuadores: 0
 };
 
 module.exports = data;
