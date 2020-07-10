@@ -22,8 +22,13 @@ app.get("/",(req,rep)=>{
 
 var routesConfig = require('./api/routes/configuracionRoutes'); //importing route
 var routesSensores = require('./api/routes/sensoresLogRoutes'); //importing route
+var routesPecera = require('./api/routes/peceraRoutes'); //importing route
+var routesCaracteriscasPercera = require('./api/routes/caracteriscasPerceraRoutes'); //importing route
+
 routesConfig(app); //register the route
 routesSensores(app); //register the route
+routesPecera(app);
+routesCaracteriscasPercera(app);
 
 app.listen(port);
 

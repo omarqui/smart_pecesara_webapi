@@ -1,4 +1,5 @@
-let data = {
+let data = [{
+    idPecera: 1,
     config:{
         fechaInternaReloj: "2020-11-08T7:03:00",
         proximaFechaMantenimiento: "2020-11-08",
@@ -8,6 +9,6 @@ let data = {
     },     
     pendienteActualizar: 1,
     estadoActuadores: 0
-};
+}];
 
 module.exports = data;

@@ -1,18 +1,18 @@
 module.exports = function(app) {
   let configuracion = require('../controllers/configuracionController');
 
+  app.route('/configuracion/:idPecera')
+    .get(configuracion.getConfig);
+
   app.route('/configuracion')
-    .get(configuracion.getConfig)
     .post(configuracion.updateConfigFromBody);
 
-  app.route('/configuracion/estado')
+  app.route('/configuracion/estado/:idPecera')
     .get(configuracion.getEstadoConfiguracion)
     .post(configuracion.updateEstadoConfiguracion);   
     
-  app.route('/configuracion/actuadores')
+  app.route('/configuracion/actuadores/:idPecera')
     .get(configuracion.getEstadoActuadores)
     .post(configuracion.updateEstadoActuadores);   
       
-  app.route('/configuracion/:fechaInternaReloj')    
-    .post(configuracion.updateFechaInterna);
 };

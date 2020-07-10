@@ -1,73 +1,56 @@
 // var mongoose = require('mongoose'),
 //     configuracion = mongoose.model('Configuracion');
 let data = require("../constants/sensoresLog");
+var _ = require('lodash');
 
 exports.getSensoresLog = function(req, res) {
+    const idPecera = req.params.idPecera;
+    const newData = _.filter(data,s=>s.idPecera==idPecera);
 //   configuracion.find({}, function(err, config) {
 //     if (err)
 //       res.send(err);
 //     res.json(config);
 //   });
-    res.json(data);
+    res.json(newData);
 };
 
 exports.getSensoresLogById = function(req, res) {
         let logSearched = {};
-        data.forEach(log => {
-            if (log._id == req.params.id) {
-                logSearched = log;
-            }
-        });
+        logSearched = _.find(data,l=>l._id == req.params.id);
+        // data.forEach(log => {
+        //     if (log._id == req.params.id) {
+        //         logSearched = log;
+        //     }
+        // });
 
         res.json(logSearched);
     };
 
 exports.getSensoresLogActual = function(req, res) {
-        let logSearched = data[data.length-1];        
+        const idPecera = req.params.idPecera;
+        const filteredData = _.filter(data,s=>s.idPecera==idPecera)
+        let logSearched = filteredData[data.length-1];        
 
         res.json(logSearched);
     };
 
-// exports.updateSensoresLog = function(req, res) {
-//     if (req.params.proximaFechaMantenimiento)
-//         data.proximaFechaMantenimiento = req.params.proximaFechaMantenimiento;
-//     if (req.params.horarioComida1)
-//         data.horarioComida1 = req.params.horarioComida1;
-//     if (req.params.horarioComida2)
-//         data.horarioComida2 = req.params.horarioComida2;
-    
-//     res.send("Configuracion actualizada");
-// //     var new_task = new configuracion(req.body);        
-// //     new_task.save(function(err, task) {
-// //     if (err)
-// //       res.send(err);
-    
-// //       res.json(task);
-// //   });
-// };
-
 exports.saveSensoresLogFromBody = function(req, res) {
     let configCtrl = require("./configuracionController");
     let newLog = req.body;
-
-    // if (newLog.fechaInternaReloj)
-    //     data.fechaInternaReloj = newLog.fechaInternaReloj;
-    // if (newLog.proximaFechaMantenimiento)
-    //     data.proximaFechaMantenimiento = newLog.proximaFechaMantenimiento;
-    // if (newLog.horarioComida1)
-    //     data.horarioComida1 = newLog.horarioComida1;
-    // if (newLog.horarioComida2)
-    //     data.horarioComida2 = newLog.horarioComida2;
+    
     const lastLog = data[data.length-1]
     newLog._id = lastLog._id + 1;    
     newLog.createdOn = new Date();
+    console.log(newLog);
+    
     data.push(newLog);
+    console.log(data);
     
+    const configPecera = _.find(configCtrl.data, c=>c.idPecera == newLog.idPecera);
+    const { docificacionManual } = configPecera.config;
+    const { pendienteActualizar, estadoActuadores } = configPecera;
     
-    // res.send("Log sensores guardado");
-    const { docificacionManual } = configCtrl.data.config;
-    const { pendienteActualizar, estadoActuadores } = configCtrl.data;
-    
+    console.log(data);
     res.json({docificacionManual, pendienteActualizar, estadoActuadores});
 };
 

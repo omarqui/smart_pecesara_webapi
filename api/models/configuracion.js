@@ -3,6 +3,9 @@ var Schema = mongoose.Schema;
 
 
 var ConfiguracionSchema = new Schema({
+  idPecera: {
+    type: String
+  },
   fechaInternaReloj: {
     type: Date,
     default: Date.now,

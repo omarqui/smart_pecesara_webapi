@@ -3,6 +3,9 @@ var Schema = mongoose.Schema;
 
 
 var SensoresLogSchema = new Schema({
+  idPecera: {
+    type: String
+  },
   createOn: {
     type: Date,
     default: Date.now,

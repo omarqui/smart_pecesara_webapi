@@ -1,6 +1,7 @@
 // var mongoose = require('mongoose'),
 //     configuracion = mongoose.model('Configuracion');
 let data = require("../constants/configuracion");
+var _ = require('lodash');
 
 exports.data = data;
 
@@ -10,54 +11,73 @@ exports.getConfig = function(req, res) {
 //       res.send(err);
 //     res.json(config);
 //   });
-    res.json(data.config);
+    
+    const idPecera = req.params.idPecera;    
+    const newData = _.find(data,c=>c.idPecera==idPecera);
+    
+    res.json(newData ? newData.config : {});
 };
 
+//Pendiente por aqui
 exports.updateConfigFromBody = function(req, res) {
+    
     let newConfig = req.body;
+    let actualData = _.find(data,c=>c.idPecera == newConfig.idPecera)
 
-    if (newConfig.fechaInternaReloj)
-        data.config.fechaInternaReloj = newConfig.fechaInternaReloj;
-    if (newConfig.proximaFechaMantenimiento)
-        data.config.proximaFechaMantenimiento = newConfig.proximaFechaMantenimiento;
-    if (newConfig.horarioComida1)
-        data.config.horarioComida1 = newConfig.horarioComida1;
-    if (newConfig.horarioComida2)
-        data.config.horarioComida2 = newConfig.horarioComida2;
-    if (newConfig.docificacionManual)
-        data.config.docificacionManual = newConfig.docificacionManual;
-
-    data.pendienteActualizar = 2;
-    res.json(data.config);
+    if (actualData)
+    {
+        if (newConfig.fechaInternaReloj)
+            actualData.config.fechaInternaReloj = newConfig.fechaInternaReloj;
+        if (newConfig.proximaFechaMantenimiento)
+            actualData.config.proximaFechaMantenimiento = newConfig.proximaFechaMantenimiento;
+        if (newConfig.horarioComida1)
+            actualData.config.horarioComida1 = newConfig.horarioComida1;
+        if (newConfig.horarioComida2)
+            actualData.config.horarioComida2 = newConfig.horarioComida2;
+        if (newConfig.docificacionManual)
+            actualData.config.docificacionManual = newConfig.docificacionManual;
+        
+        actualData.pendienteActualizar = 2;
+    }
+  
+    res.json(actualData?actualData.config:{});
 };
 
 exports.getEstadoConfiguracion = function(req, res) {
-    let {pendienteActualizar} = data;
+    const idPecera = req.params.idPecera;
+    let {pendienteActualizar} = _.find(data,c=>c.idPecera == idPecera);
     res.json({pendienteActualizar});
 };
 
 exports.getEstadoActuadores = function(req, res) {
-    let {estadoActuadores} = data;
+    const idPecera = req.params.idPecera;
+    let {estadoActuadores} = _.find(data,c=>c.idPecera == idPecera);
     res.json({estadoActuadores});
 };
 
 
 exports.updateEstadoConfiguracion = function(req, res) {    
-    let {pendienteActualizar} = data;
-    data.pendienteActualizar = req.body.pendienteActualizar;
-    
+    const idPecera = req.params.idPecera;
+    let actualData = _.find(data,c=>c.idPecera == idPecera);
+    actualData.pendienteActualizar = req.body.pendienteActualizar;
+    let {pendienteActualizar} = actualData;    
     res.json({pendienteActualizar});
 };
 
-exports.updateEstadoActuadores = function(req, res) {        
-    data.estadoActuadores = req.body.estadoActuadores;
+exports.updateEstadoActuadores = function(req, res) {     
+    const idPecera = req.params.idPecera;
+    let actualData = _.find(data,c=>c.idPecera == idPecera); 
+    actualData.estadoActuadores = req.body.estadoActuadores;
     
-    res.json({estadoActuadores : data.estadoActuadores});
+    res.json({estadoActuadores : actualData.estadoActuadores});
 };
 
 exports.updateFechaInterna = function(req, res) {
+    const idPecera = req.params.idPecera;
+    let actualData = _.find(data,c=>c.idPecera == idPecera); 
+
     if (req.params.fechaInternaReloj)
-        data.config.fechaInternaReloj = req.params.fechaInternaReloj;    
+        actualData.config.fechaInternaReloj = req.params.fechaInternaReloj;    
     
-    res.json(data.config);
+    res.json(actualData.config);
 };
