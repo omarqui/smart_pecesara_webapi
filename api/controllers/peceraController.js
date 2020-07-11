@@ -31,7 +31,7 @@ exports.updatePecera = function(req, res) {
             searched = pec;
         }
     });
-    searched.nombre = req.params.nombre;
+    searched.nombre = req.body.nombre;
     
     res.send("Pecera actualizada");
 };

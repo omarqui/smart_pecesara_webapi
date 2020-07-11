@@ -5,9 +5,7 @@ module.exports = function(app) {
     .get(peceraController.getPecera)
     .post(peceraController.savePeceraFromBody);
   
-  app.route('/pecera/:id/:nombre')    
-    .put(peceraController.updatePecera);
-  
   app.route('/pecera/:id/')    
-    .get(peceraController.getPeceraById);
+    .get(peceraController.getPeceraById)
+    .put(peceraController.updatePecera);
 };
