@@ -30,7 +30,8 @@ exports.getSensoresLogActual = function(req, res) {
         const idPecera = req.params.idPecera;
         const filteredData = _.filter(data,s=>s.idPecera==idPecera)
         if (filteredData.length <= 0) {
-         res.json({});   
+            res.statusCode = 404;
+            res.json({});   
         }
         let logSearched = filteredData[filteredData.length-1];        
         
