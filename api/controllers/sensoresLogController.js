@@ -29,8 +29,8 @@ exports.getSensoresLogById = function(req, res) {
 exports.getSensoresLogActual = function(req, res) {
         const idPecera = req.params.idPecera;
         const filteredData = _.filter(data,s=>s.idPecera==idPecera)
-        let logSearched = filteredData[data.length-1];        
-
+        let logSearched = filteredData[filteredData.length-1];        
+        
         res.json(logSearched);
     };
 

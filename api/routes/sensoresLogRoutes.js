@@ -2,7 +2,7 @@ module.exports = function(app) {
   let sesoresController = require('../controllers/sensoresLogController');
 
   app.route('/sensores/:idPecera')
-    .get(sesoresController.getSensoresLog)
+    .get(sesoresController.getSensoresLog);
     
   app.route('/sensores')  
     .post(sesoresController.saveSensoresLogFromBody);
