@@ -47,7 +47,7 @@ exports.updateCaracteriscasPercera = function(req, res) {
     searched.nombre = newCaracteriscasPercera.nombre;
     searched.dato = newCaracteriscasPercera.dato;    
     
-    res.send("Caracterisca Percera actualizada");
+    res.send({});
 };
 
 exports.saveCaracteriscasPerceraFromBody = function(req, res) {    
@@ -58,6 +58,6 @@ exports.saveCaracteriscasPerceraFromBody = function(req, res) {
     newCaracteriscasPercera.createdOn = new Date();
     data.push(newCaracteriscasPercera);
     
-    res.send("CaracteriscasPercera guardada");   
+    res.send({});   
 };
 

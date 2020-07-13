@@ -33,7 +33,7 @@ exports.updatePecera = function(req, res) {
     });
     searched.nombre = req.body.nombre;
     
-    res.send("Pecera actualizada");
+    res.send({});
 };
 
 exports.savePeceraFromBody = function(req, res) {    
@@ -61,6 +61,6 @@ exports.savePeceraFromBody = function(req, res) {
     let configCtrl = require("./configuracionController");
     configCtrl.data.push(actualData);
 
-    res.send("Pecera guardada");   
+    res.send({});   
 };
 
