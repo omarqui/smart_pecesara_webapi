@@ -1,83 +1,77 @@
-// var mongoose = require('mongoose'),
-//     configuracion = mongoose.model('Configuracion');
-let data = require("../constants/configuracion");
-var _ = require('lodash');
+const ConfiguracionModel = require('../models/configuracion');
 
-exports.data = data;
+exports.getConfig = async function (req, res) {
+    const idPecera = req.params.idPecera;
+    const config = await ConfiguracionModel.findOne({ idPecera });
+    let simpleConfig = {};
 
-exports.getConfig = function(req, res) {
-//   configuracion.find({}, function(err, config) {
-//     if (err)
-//       res.send(err);
-//     res.json(config);
-//   });
-    
-    const idPecera = req.params.idPecera;    
-    const newData = _.find(data,c=>c.idPecera==idPecera);
-    
-    res.json(newData ? newData.config : {});
+    if (config)
+        simpleConfig = getSimpleConfig(config);
+
+    res.json(simpleConfig);
 };
 
-//Pendiente por aqui
-exports.updateConfigFromBody = function(req, res) {
-    
-    let newConfig = req.body;
-    let actualData = _.find(data,c=>c.idPecera == newConfig.idPecera)
+exports.updateConfigFromBody = async function (req, res) {
+    let { idPecera, ...newConfig } = req.body;
 
-    if (actualData)
-    {
-        if (newConfig.fechaInternaReloj)
-            actualData.config.fechaInternaReloj = newConfig.fechaInternaReloj;
-        if (newConfig.proximaFechaMantenimiento)
-            actualData.config.proximaFechaMantenimiento = newConfig.proximaFechaMantenimiento;
-        if (newConfig.horarioComida1)
-            actualData.config.horarioComida1 = newConfig.horarioComida1;
-        if (newConfig.horarioComida2)
-            actualData.config.horarioComida2 = newConfig.horarioComida2;
-        if (newConfig.docificacionManual)
-            actualData.config.docificacionManual = newConfig.docificacionManual;
-        
-        actualData.pendienteActualizar = 2;
+    const configActual = await ConfiguracionModel.find({ idPecera })
+
+    if (!configActual) {
+        res.statusCode = 404;
+        res.json({});
     }
-  
-    res.json(actualData?actualData.config:{});
+
+    newConfig = Object.assign({}, newConfig, { pendienteActualizar: 2 })
+    await ConfiguracionModel.updateOne({ idPecera }, newConfig);
+    console.log(idPecera);
+    const updatedConfig = await ConfiguracionModel.findOne({ idPecera });
+
+    res.json(getSimpleConfig(updatedConfig));
 };
 
-exports.getEstadoConfiguracion = function(req, res) {
+exports.getEstadoConfiguracion = async function (req, res) {
     const idPecera = req.params.idPecera;
-    let {pendienteActualizar} = _.find(data,c=>c.idPecera == idPecera);
-    res.json({pendienteActualizar});
+
+    const result = await ConfiguracionModel.findOne({ idPecera }, { pendienteActualizar: 1, _id: 0 });
+    res.json(result);
 };
 
-exports.getEstadoActuadores = function(req, res) {
+exports.getEstadoActuadores = async function (req, res) {
     const idPecera = req.params.idPecera;
-    let {estadoActuadores} = _.find(data,c=>c.idPecera == idPecera);
-    res.json({estadoActuadores});
+    const result = await ConfiguracionModel.findOne({ idPecera }, { estadoActuadores: 1, _id:0 });
+    res.json(result);
 };
 
 
-exports.updateEstadoConfiguracion = function(req, res) {    
-    const idPecera = req.params.idPecera;
-    let actualData = _.find(data,c=>c.idPecera == idPecera);
-    actualData.pendienteActualizar = req.body.pendienteActualizar;
-    let {pendienteActualizar} = actualData;    
-    res.json({pendienteActualizar});
+exports.updateEstadoConfiguracion = async function (req, res) {
+    const { idPecera } = req.params;
+    const { pendienteActualizar } = req.body;
+    await ConfiguracionModel.updateOne({idPecera}, { pendienteActualizar });
+    res.redirect(req.url)
 };
 
-exports.updateEstadoActuadores = function(req, res) {     
-    const idPecera = req.params.idPecera;
-    let actualData = _.find(data,c=>c.idPecera == idPecera); 
-    actualData.estadoActuadores = req.body.estadoActuadores;
+exports.updateEstadoActuadores = async function (req, res) {
+    const { idPecera } = req.params;
+    const { estadoActuadores } = req.body;
     
-    res.json({estadoActuadores : actualData.estadoActuadores});
+    await ConfiguracionModel.updateOne({idPecera}, { estadoActuadores });
+    res.redirect(req.url)
 };
 
-exports.updateFechaInterna = function(req, res) {
-    const idPecera = req.params.idPecera;
-    let actualData = _.find(data,c=>c.idPecera == idPecera); 
-
-    if (req.params.fechaInternaReloj)
-        actualData.config.fechaInternaReloj = req.params.fechaInternaReloj;    
+exports.updateFechaInterna = async function (req, res) {
+    const { 
+        idPecera, 
+        fechaInternaReloj 
+    } = req.params;
     
-    res.json(actualData.config);
+    await ConfiguracionModel.updateOne({idPecera}, { fechaInternaReloj });
+    res.redirect(`/configuracion/${idPecera}`);
 };
+
+function getSimpleConfig(config) {
+    return Object.assign({}, config.toObject(), {
+        docificacionManual: undefined,
+        pendienteActualizar: undefined,
+        estadoActuadores: undefined
+    });
+}

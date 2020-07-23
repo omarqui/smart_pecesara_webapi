@@ -1,14 +1,18 @@
-module.exports = function(app) {
-  let caracteriscasPerceraController = require('../controllers/caracteriscasPerceraController');
+const express = require('express');
+const router = express.Router();
 
-  app.route('/caracteriscasPercera')
-    .get(caracteriscasPerceraController.getCaracteriscasPercera)
-    .post(caracteriscasPerceraController.saveCaracteriscasPerceraFromBody);
-  
-  app.route('/caracteriscasPercera/:id')
-    .put(caracteriscasPerceraController.updateCaracteriscasPercera)
-    .get(caracteriscasPerceraController.getCaracteriscasPerceraById);
+const caracteriscasPerceraController = require('../controllers/caracteriscasPerceraController');
+const ctrl = new caracteriscasPerceraController();
 
-  app.route('/caracteriscasPercera/fromPecera/:id')
-    .get(caracteriscasPerceraController.getCaracteriscasPerceraByIdPecera);
-};
+router.route('/caracteriscasPercera')
+  .get(ctrl.getCaracteriscasPercera)
+  .post(ctrl.saveCaracteriscasPerceraFromBody);
+
+router.route('/caracteriscasPercera/:id')
+  .put(ctrl.updateCaracteriscasPercera)
+  .get(ctrl.getCaracteriscasPerceraById);
+
+router.route('/caracteriscasPercera/fromPecera/:id')
+  .get(ctrl.getCaracteriscasPerceraByIdPecera);
+
+module.exports = router;

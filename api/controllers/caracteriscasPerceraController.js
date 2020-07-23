@@ -1,63 +1,40 @@
-// var mongoose = require('mongoose'),
-//     configuracion = mongoose.model('Configuracion');
-let data = require("../constants/caracteriscasPercera");
+const caracteriscasPercera = require("../models/caracteriscasPercera");
 
-exports.getCaracteriscasPercera = function(req, res) {
-//   configuracion.find({}, function(err, config) {
-//     if (err)
-//       res.send(err);
-//     res.json(config);
-//   });
-    res.json(data);
-};
+class CaracteriscasPercera {
+    
+    async getCaracteriscasPercera(req, res) {    
+        const list = await caracteriscasPercera.find();
+        res.json(list);
+    }
 
-exports.getCaracteriscasPerceraById = function(req, res) {
-        let searched = {};
-        data.forEach(carac => {
-            if (carac._id == req.params.id) {
-                searched = carac;
-            }
-        });
+    async getCaracteriscasPerceraById(req, res) {
+        const searched = await caracteriscasPercera.findById(req.params.id);
+    
+        res.json(searched);
+    }
+    
+    async getCaracteriscasPerceraByIdPecera (req, res) {
+        let searched = await caracteriscasPercera.find({idPecera: req.params.id});        
 
         res.json(searched);
-    };
+    }
 
-exports.getCaracteriscasPerceraByIdPecera = function(req, res) {
-        let searched = [];
+    async updateCaracteriscasPercera (req, res) {         
+        let newCaracteriscasPercera = req.body;
+        await caracteriscasPercera.findByIdAndUpdate(req.params.id, newCaracteriscasPercera);
+        
+        res.send({});
+    }
 
-        data.forEach(carac => {
-            if (carac.idPecera == req.params.id) {
-                searched.push(carac);
-            }
-        });
+    async saveCaracteriscasPerceraFromBody (req, res) {    
+        let newCaracteriscasPercera = req.body;
 
-        res.json(searched);
-    };    
+        const caracteriticas = new caracteriscasPercera(newCaracteriscasPercera);
+        caracteriticas.save();
+        
+        res.send({});   
+    }
+}
 
-exports.updateCaracteriscasPercera = function(req, res) {
-    let searched = {};
-    data.forEach(carac => {
-        if (carac._id == req.params.id) {
-            searched = carac;
-        }
-    });    
-
-    let newCaracteriscasPercera = req.body;
-
-    searched.nombre = newCaracteriscasPercera.nombre;
-    searched.dato = newCaracteriscasPercera.dato;    
-    
-    res.send({});
-};
-
-exports.saveCaracteriscasPerceraFromBody = function(req, res) {    
-    let newCaracteriscasPercera = req.body;
-
-    const lastId = data[data.length-1]
-    newCaracteriscasPercera._id = lastId._id + 1;    
-    newCaracteriscasPercera.createdOn = new Date();
-    data.push(newCaracteriscasPercera);
-    
-    res.send({});   
-};
+module.exports = CaracteriscasPercera;
 

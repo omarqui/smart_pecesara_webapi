@@ -1,11 +1,13 @@
-module.exports = function(app) {
-  let peceraController = require('../controllers/peceraController');
+const express = require('express');
+const router = express.Router();
 
-  app.route('/pecera')
-    .get(peceraController.getPecera)
-    .post(peceraController.savePeceraFromBody);
-  
-  app.route('/pecera/:id/')    
-    .get(peceraController.getPeceraById)
-    .put(peceraController.updatePecera);
-};
+const peceraController = require('../controllers/peceraController');
+const ctrl = new peceraController();
+
+router.get('/pecera',ctrl.getPecera);
+router.post('/pecera',ctrl.savePeceraFromBody);
+
+router.get('/pecera/:id/',ctrl.getPeceraById);
+router.put('/pecera/:id/',ctrl.updatePecera);
+
+module.exports = router;
