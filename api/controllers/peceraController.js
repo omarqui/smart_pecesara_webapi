@@ -32,7 +32,7 @@ class PeceraController {
         const data = await dbService.find();
         if (data.length > 0){
             const lastId = data[data.length - 1]
-            newPecera.idManual = lastId.idManual + 1;
+            newPecera.idManual = lastId.idManual ? lastId.idManual + 1 : 1;
         } else {
             newPecera.idManual = 1 
         }
