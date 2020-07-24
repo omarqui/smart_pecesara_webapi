@@ -1,35 +1,8 @@
-let express = require('express'),
-  app = express(),
-  port = process.env.PORT || 3000,
-//   mongoose = require('mongoose'),
-//   Task = require('./api/models/todoListModel'), //created model loading here
-  bodyParser = require('body-parser');
-  
-// mongoose instance connection url connection
-// mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://localhost/Tododb'); 
+let dotenv = require('dotenv');
+dotenv.config();
 
-var data = require("./api/constants/configuracion");
+let server = require('./config/server')
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+server.listen(server.get("PORT"));
 
-app.get("/",(req,rep)=>{
-    rep.send("<h1 style='margin-top:40px;text-align:center; font-family: Arial, sans-serif;'>"+
-             "Smart Pecera Webapi funcionado"+
-             "</h1>");
-});
-
-var routesConfig = require('./api/routes/configuracionRoutes'); //importing route
-var routesSensores = require('./api/routes/sensoresLogRoutes'); //importing route
-var routesPecera = require('./api/routes/peceraRoutes'); //importing route
-var routesCaracteriscasPercera = require('./api/routes/caracteriscasPerceraRoutes'); //importing route
-
-routesConfig(app); //register the route
-routesSensores(app); //register the route
-routesPecera(app);
-routesCaracteriscasPercera(app);
-
-app.listen(port);
-
-console.log('todo list RESTful API server started on: ' + port);
+console.log('SmartPecera API serving on: ' + server.get("PORT"));

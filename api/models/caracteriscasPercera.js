@@ -2,9 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var CaracteriscasPerceraSchema = new Schema({
-  id: {
-    type: String,
-  }, 
   idPecera: {
     type: String,
   },

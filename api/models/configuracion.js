@@ -15,10 +15,19 @@ var ConfiguracionSchema = new Schema({
     type: Date
   },
   horarioComida1: {
-    type: Date
+    type: String
   },
   horarioComida2: {
-    type: Date
+    type: String
+  },
+  docificacionManual: {
+    type: Number
+  },
+  pendienteActualizar: {
+    type: Number
+  },
+  estadoActuadores: {
+    type: Number
   }
 });
 

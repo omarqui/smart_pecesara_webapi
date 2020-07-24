@@ -1,60 +1,37 @@
-// var mongoose = require('mongoose'),
-//     configuracion = mongoose.model('Configuracion');
-let data = require("../constants/sensoresLog");
-var _ = require('lodash');
+const _ = require("lodash");
+const SensoresLogModel = require('../models/sensoresLogSensores');
+const sensoresLogSensores = require("../models/sensoresLogSensores");
 
-exports.getSensoresLog = function(req, res) {
-    const idPecera = req.params.idPecera;
-    const newData = _.filter(data,s=>s.idPecera==idPecera);
-//   configuracion.find({}, function(err, config) {
-//     if (err)
-//       res.send(err);
-//     res.json(config);
-//   });
-    res.json(newData);
+exports.getSensoresLog = async function (req, res) {
+    const { idPecera } = req.params;
+    const log = await SensoresLogModel.find({ idPecera });
+
+    res.json(log);
 };
 
-exports.getSensoresLogById = function(req, res) {
-        let logSearched = {};
-        logSearched = _.find(data,l=>l._id == req.params.id);
-        // data.forEach(log => {
-        //     if (log._id == req.params.id) {
-        //         logSearched = log;
-        //     }
-        // });
-
-        res.json(logSearched);
-    };
-
-exports.getSensoresLogActual = function(req, res) {
-        const idPecera = req.params.idPecera;
-        const filteredData = _.filter(data,s=>s.idPecera==idPecera)
-        if (filteredData.length <= 0) {
-            res.statusCode = 404;
-            res.json({});   
-        }
-        let logSearched = filteredData[filteredData.length-1];        
-        
-        res.json(logSearched);
-    };
-
-exports.saveSensoresLogFromBody = function(req, res) {
-    let configCtrl = require("./configuracionController");
-    let newLog = req.body;
+exports.getSensoresLogById = async function (req, res) {
+    const { id } = req.params;
+    const logSearched = await SensoresLogModel.findById(id)
     
-    const lastLog = data[data.length-1]
-    newLog._id = lastLog._id + 1;    
-    newLog.createdOn = new Date();
-    console.log(newLog);
-    
-    data.push(newLog);
-    console.log(data);
-    
-    const configPecera = _.find(configCtrl.data, c=>c.idPecera == newLog.idPecera);
-    const { docificacionManual } = configPecera.config;
-    const { pendienteActualizar, estadoActuadores } = configPecera;
-    
-    console.log(data);
-    res.json({docificacionManual, pendienteActualizar, estadoActuadores});
+    res.json(logSearched);
 };
 
+exports.getSensoresLogActual = async function (req, res) {
+    const { idPecera } = req.params;
+    const logList = await sensoresLogSensores.find({ idPecera });
+    const ordenedList = _.orderBy(logList, ["createOn"], ["desc"]);    
+    
+    res.json(_.first(ordenedList));
+};
+
+exports.saveSensoresLogFromBody = async function (req, res) {
+    const newLog = Object.assign({}, req.body);
+    const log = new SensoresLogModel(newLog);
+    await log.save();
+
+    const ConfiguracionModel = require("../models/configuracion");    
+    const configPecera = await ConfiguracionModel.findOne({idPecera: newLog.idPecera});
+    const { docificacionManual, pendienteActualizar, estadoActuadores } = configPecera;
+
+    res.json({ docificacionManual, pendienteActualizar, estadoActuadores });
+};

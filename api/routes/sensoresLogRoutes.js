@@ -1,15 +1,18 @@
-module.exports = function(app) {
-  let sesoresController = require('../controllers/sensoresLogController');
+const express = require('express');
+const router = express.Router();
 
-  app.route('/sensores/:idPecera')
-    .get(sesoresController.getSensoresLog);
-    
-  app.route('/sensores')  
-    .post(sesoresController.saveSensoresLogFromBody);
-      
-  app.route('/sensores/actual/:idPecera')    
-    .get(sesoresController.getSensoresLogActual);
+let sesoresController = require('../controllers/sensoresLogController');
+
+router.route('/sensores/:idPecera')
+  .get(sesoresController.getSensoresLog);
   
-  app.route('/sensores/detalle/:id')    
-    .get(sesoresController.getSensoresLogById);
-};
+router.route('/sensores')  
+  .post(sesoresController.saveSensoresLogFromBody);
+    
+router.route('/sensores/actual/:idPecera')    
+  .get(sesoresController.getSensoresLogActual);
+
+router.route('/sensores/detalle/:id')    
+  .get(sesoresController.getSensoresLogById);
+
+module.exports = router;

@@ -1,18 +1,20 @@
-module.exports = function(app) {
-  let configuracion = require('../controllers/configuracionController');
+const express = require('express');
+const router = express.Router();
 
-  app.route('/configuracion/:idPecera')
+let configuracion = require('../controllers/configuracionController');
+
+router.route('/configuracion/:idPecera')
     .get(configuracion.getConfig);
 
-  app.route('/configuracion')
+router.route('/configuracion')
     .post(configuracion.updateConfigFromBody);
 
-  app.route('/configuracion/estado/:idPecera')
+router.route('/configuracion/estado/:idPecera')
     .get(configuracion.getEstadoConfiguracion)
     .post(configuracion.updateEstadoConfiguracion);   
     
-  app.route('/configuracion/actuadores/:idPecera')
+router.route('/configuracion/actuadores/:idPecera')
     .get(configuracion.getEstadoActuadores)
     .post(configuracion.updateEstadoActuadores);   
-      
-};
+
+module.exports = router;
