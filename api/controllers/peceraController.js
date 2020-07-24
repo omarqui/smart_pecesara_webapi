@@ -28,28 +28,14 @@ class PeceraController {
 
     async savePeceraFromBody (req, res) {
         let newPecera = req.body;
-    
-        // const lastId = data[data.length - 1]
-        // newPecera._id = lastId._id + 1;
-        // newPecera.createdOn = new Date();
-    
-        // data.push(newPecera);
-    
-        // actualData = {
-        //     idPecera: newPecera._id,
-        //     config: {
-        //         fechaInternaReloj: moment().format(),
-        //         proximaFechaMantenimiento: moment().format("YYYY-MM-DD"),
-        //         horarioComida1: moment().format("HH:mm"),
-        //         horarioComida2: moment().add(1, "hour").format("HH:mm"),
-        //         docificacionManual: 0,
-        //     },
-        //     pendienteActualizar: 1,
-        //     estadoActuadores: 0
-        // };
-    
-        // let configCtrl = require("./configuracionController");
-        // configCtrl.data.push(actualData);
+        
+        const data = await dbService.find();
+        if (data.length > 0){
+            const lastId = data[data.length - 1]
+            newPecera.idManual = lastId.idManual + 1;
+        } else {
+            newPecera.idManual = 1 
+        }
         
         const pecera = new dbService(newPecera);
         await pecera.save();

@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 
 var PeceraSchema = new Schema({
-  id: {
+  idManual: {
     type: String,
   }, 
   nombre: {
