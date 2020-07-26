@@ -4,7 +4,8 @@ const dbService = require("../models/pecera");
 const $project = {
     _id: 0,
     _id: "$idManual",
-    nombre: 1
+    nombre: 1,
+    createOn: 1
 };
 
 class PeceraController {

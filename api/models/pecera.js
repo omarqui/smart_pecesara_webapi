@@ -8,6 +8,11 @@ var PeceraSchema = new Schema({
   }, 
   nombre: {
     type: String,
+  },
+  createOn: {
+    type: Date,
+    default: Date.now,
+    required: "Fecha requirida"
   }
 });
 
