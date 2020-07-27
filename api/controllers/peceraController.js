@@ -31,6 +31,7 @@ async updatePecera(req, res) {
 async savePeceraFromBody(req, res) {
     let newPecera = req.body;
     if (newPecera._id) newPecera._id = undefined;
+    console.log(newPecera);
     
     const data = await dbService.find();
     if (data.length > 0) {
