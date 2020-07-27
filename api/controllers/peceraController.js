@@ -28,13 +28,14 @@ class PeceraController {
 
     async savePeceraFromBody (req, res) {
         let newPecera = req.body;
-        
+        if (newPecera._id) newPecera._id = undefined;
+
         const data = await dbService.find();
         if (data.length > 0){
             const lastId = data[data.length - 1]
             newPecera.idManual = lastId.idManual ? lastId.idManual + 1 : 1;
         } else {
-            newPecera.idManual = 1 
+            newPecera.idManual = 1; 
         }
         
         const pecera = new dbService(newPecera);
