@@ -30,7 +30,10 @@ async updatePecera(req, res) {
 
 async savePeceraFromBody(req, res) {
     let newPecera = req.body;
-    if (newPecera._id) newPecera._id = undefined;
+    
+    if (newPecera.hasOwnProperty("_id")) newPecera._id = undefined;
+    if (newPecera.hasOwnProperty("createOn")) newPecera.createOn = undefined;
+
     console.log(newPecera);
     
     const data = await dbService.find();
