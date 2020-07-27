@@ -23,7 +23,7 @@ class PeceraController {
 }
 
 async updatePecera(req, res) {
-    await dbService.findAndUpdate({ idManual: req.params._id}, { nombre: req.body.nombre });
+    await dbService.findAndUpdate({ idManual: req.params.id}, { nombre: req.body.nombre });
 
     res.send({});
 }
