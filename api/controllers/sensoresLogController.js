@@ -11,16 +11,21 @@ exports.getSensoresLog = async function (req, res) {
 
 exports.getSensoresLogById = async function (req, res) {
     const { id } = req.params;
-    const logSearched = await SensoresLogModel.findById(id)
-    
+    const logSearched = await SensoresLogModel.findById(id);    
+
     res.json(logSearched);
 };
 
 exports.getSensoresLogActual = async function (req, res) {
     const { idPecera } = req.params;
     const logList = await sensoresLogSensores.find({ idPecera });
-    const ordenedList = _.orderBy(logList, ["createOn"], ["desc"]);    
     
+    if (logList.length <= 0) {
+        res.statusCode = 404;
+        res.json({});   
+    }
+    
+    const ordenedList = _.orderBy(logList, ["createOn"], ["desc"]);    
     res.json(_.first(ordenedList));
 };
 
