@@ -34,8 +34,6 @@ async savePeceraFromBody(req, res) {
     if (newPecera.hasOwnProperty("_id")) newPecera._id = undefined;
     if (newPecera.hasOwnProperty("createOn")) newPecera.createOn = undefined;
 
-    console.log(newPecera);
-    
     const data = await dbService.find();
     if (data.length > 0) {
         const lastId = data[data.length - 1]

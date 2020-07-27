@@ -25,7 +25,9 @@ exports.getSensoresLogActual = async function (req, res) {
 };
 
 exports.saveSensoresLogFromBody = async function (req, res) {
-    const newLog = Object.assign({}, req.body);
+    let newLog = Object.assign({}, req.body);
+    if (newLog.hasOwnProperty("_id")) newLog._id = undefined;
+    
     const log = new SensoresLogModel(newLog);
     await log.save();
 
