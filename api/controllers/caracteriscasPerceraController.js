@@ -28,6 +28,7 @@ class CaracteriscasPercera {
 
     async saveCaracteriscasPerceraFromBody (req, res) {    
         let newCaracteriscasPercera = req.body;
+        if (newCaracteriscasPercera.hasOwnProperty("_id")) newCaracteriscasPercera._id = undefined;
 
         const caracteriticas = new caracteriscasPercera(newCaracteriscasPercera);
         caracteriticas.save();

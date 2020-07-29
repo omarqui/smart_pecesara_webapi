@@ -7,12 +7,11 @@ var ConfiguracionSchema = new Schema({
     type: String
   },
   fechaInternaReloj: {
-    type: Date,
-    default: Date.now,
-    required: "Fecha requirida"
+    type: String,
+    default: Date.now
   },
   proximaFechaMantenimiento: {
-    type: Date
+    type: String
   },
   horarioComida1: {
     type: String

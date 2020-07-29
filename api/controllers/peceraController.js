@@ -23,13 +23,16 @@ class PeceraController {
 }
 
 async updatePecera(req, res) {
-    await dbService.findAndUpdate({ idManual: req.params.id}, { nombre: req.body.nombre });
+    await dbService.findOneAndUpdate({ idManual: req.params.id}, { nombre: req.body.nombre });
 
     res.send({});
 }
 
 async savePeceraFromBody(req, res) {
     let newPecera = req.body;
+    
+    if (newPecera.hasOwnProperty("_id")) newPecera._id = undefined;
+    if (newPecera.hasOwnProperty("createOn")) newPecera.createOn = undefined;
 
     const data = await dbService.find();
     if (data.length > 0) {
