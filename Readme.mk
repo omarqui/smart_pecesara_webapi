@@ -5,8 +5,8 @@
 [x] Crear endPoints para tabla caracteriscasPercera
 [x] Agregar idPecera a tablas existentes
 [x] Agregar idPecera a endPoints existentes
-[] Agregar endPoint para filtrar log de sensores por rango de fecha
-[] Persistencia en DB
+[x] Agregar endPoint para filtrar log de sensores por rango de fecha
+[x] Persistencia en DB
 
 ---
 
