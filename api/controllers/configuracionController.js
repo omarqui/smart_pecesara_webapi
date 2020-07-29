@@ -4,7 +4,7 @@ exports.getConfig = async function (req, res) {
     const idPecera = req.params.idPecera;
     const config = await ConfiguracionModel.findOne({ idPecera });
     let simpleConfig = {};
-
+    
     if (config)
         simpleConfig = getSimpleConfig(config);
 
@@ -22,6 +22,15 @@ exports.updateConfigFromBody = async function (req, res) {
     }
 
     newConfig = Object.assign({}, newConfig, { pendienteActualizar: 2 })
+    
+    if (!newConfig.fechaInternaReloj) delete newConfig.fechaInternaReloj;
+    if (!newConfig.proximaFechaMantenimiento) delete newConfig.proximaFechaMantenimiento;
+    if (!newConfig.horarioComida1) delete newConfig.horarioComida1;
+    if (!newConfig.horarioComida2) delete newConfig.horarioComida2;
+    if (!newConfig.docificacionManual) delete newConfig.docificacionManual;
+    if (!newConfig.pendienteActualizar) delete newConfig.pendienteActualizar;
+    if (!newConfig.estadoActuadores) delete newConfig.estadoActuadores;
+    
     await ConfiguracionModel.updateOne({ idPecera }, newConfig);
     console.log(idPecera);
     const updatedConfig = await ConfiguracionModel.findOne({ idPecera });
