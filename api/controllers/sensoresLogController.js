@@ -27,7 +27,6 @@ exports.getSensoresLogById = async function (req, res) {
 exports.getSensoresLogBetweenDates = async function (req, res) {
     let { desde, hasta } = req.params;
     hasta = addDays(hasta, 1);
-    console.log(desde,hasta);
     
     const logSearched = await SensoresLogModel.find({
         createOn: {
