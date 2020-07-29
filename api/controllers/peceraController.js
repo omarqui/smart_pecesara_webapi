@@ -47,8 +47,8 @@ async savePeceraFromBody(req, res) {
 
     const newConfig = {
         idPecera: pecera.idManual,
-        fechaInternaReloj: moment().format(),
-        proximaFechaMantenimiento: moment().format("YYYY-MM-DD"),
+        fechaInternaReloj: moment().format("DD-MM-YYYYTHH:mm"),
+        proximaFechaMantenimiento: moment().format("DD-MM-YYYY"),
         horarioComida1: moment().format("HH:mm"),
         horarioComida2: moment().add(1, "hour").format("HH:mm"),
         docificacionManual: 0,
