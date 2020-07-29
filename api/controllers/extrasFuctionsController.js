@@ -1,17 +1,17 @@
-exports.resetDB = async function (req, res) {
-    const CaracteriscasPerceraModel = require("../api/models/caracteriscasPercera");
-  const ConfiguracionModel = require('../api/models/configuracion');
-  const PeceraModel = require("../api/models/pecera");
-  const SensoresLogModel = require('../api/models/sensoresLogSensores');
+const { getStyledText } = require("../utils/getStyledText");
 
-  await CaracteriscasPerceraModel.remove();
-  await ConfiguracionModel.remove();
-  await PeceraModel.remove();
-  await SensoresLogModel.remove();
+exports.resetDB = async function (req, res) {
+  const CaracteriscasPerceraModel = require("../models/caracteriscasPercera");
+  const ConfiguracionModel = require('../models/configuracion');
+  const PeceraModel = require("../models/pecera");
+  const SensoresLogModel = require('../models/sensoresLogSensores');
+
+  await CaracteriscasPerceraModel.deleteMany({});
+  await ConfiguracionModel.deleteMany({});
+  await PeceraModel.deleteMany({});
+  await SensoresLogModel.deleteMany({});
   
   console.log("DB reseted!");
   
-  rep.send("<h1 style='margin-top:40px;text-align:center; font-family: Arial, sans-serif;'>" +
-    "Smart Pecera Webapi reseteada!" +
-    "</h1>");
+  res.send(getStyledText("Smart Pecera Webapi reseteada!"));
 };

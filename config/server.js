@@ -1,3 +1,5 @@
+const { getStyledText } = require("../api/utils/getStyledText");
+
 let express = require('express'),    
     bodyParser = require('body-parser'),
     server = express();
@@ -12,9 +14,9 @@ server.use(bodyParser.json());
 server.use(require('../api/routes'))
 
 server.get("/", (req, rep) => {
-  rep.send("<h1 style='margin-top:40px;text-align:center; font-family: Arial, sans-serif;'>" +
-    "Smart Pecera Webapi funcionado" +
-    "</h1>");
+  rep.send(getStyledText("Smart Pecera Webapi funcionado"));
 });
 
 module.exports = server;
+
+
