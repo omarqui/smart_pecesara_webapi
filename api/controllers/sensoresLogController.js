@@ -63,6 +63,8 @@ exports.saveSensoresLogFromBody = async function (req, res) {
     
     const log = new SensoresLogModel(newLog);
     log.createOn = Date.now();
+    console.log(log);
+    
     await log.save();
 
     const ConfiguracionModel = require("../models/configuracion");    
