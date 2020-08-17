@@ -1,6 +1,7 @@
 const _ = require("lodash");
 const SensoresLogModel = require('../models/sensoresLogSensores');
 const sensoresLogSensores = require("../models/sensoresLogSensores");
+const moment = require('moment');
 
 function addDays(date, days) {
     var result = new Date(date);
@@ -25,13 +26,20 @@ exports.getSensoresLogById = async function (req, res) {
 };
 
 exports.getSensoresLogBetweenDates = async function (req, res) {
-    const { desde, hasta, idPecera } = req.params;
-    const hastaFinal = addDays(hasta, 1);
+    const { desde, hasta, idPecera, horaInicio, horaFin } = req.params;
+    
+    console.log(req.params);
+    
+    
+    const desdeFinal = moment.utc((horaInicio) ? `${desde}T${horaInicio}:00` : desde);
+    const hastaFinal = moment.utc((horaFin) ? `${hasta}T${horaFin}:59`: addDays(hasta, 1));
+
+    console.log(desdeFinal, hastaFinal);
     
     const logSearched = await SensoresLogModel.find({
         idPecera,
         createOn: {
-            $gte: desde,
+            $gte: desdeFinal,
             $lt: hastaFinal
         }
     }).sort({

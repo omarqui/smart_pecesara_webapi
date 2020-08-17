@@ -15,7 +15,7 @@ router.route('/sensores/actual/:idPecera')
 router.route('/sensores/detalle/:id')    
   .get(sesoresController.getSensoresLogById);
 
-router.route('/sensores/:idPecera/:desde/:hasta')    
+router.route('/sensores/:idPecera/:desde/:hasta/:horaInicio/:horaFin')    
   .get(sesoresController.getSensoresLogBetweenDates);
   
 module.exports = router;
