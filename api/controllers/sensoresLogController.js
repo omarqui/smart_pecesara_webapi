@@ -28,13 +28,10 @@ exports.getSensoresLogById = async function (req, res) {
 exports.getSensoresLogBetweenDates = async function (req, res) {
     const { desde, hasta, idPecera, horaInicio, horaFin } = req.params;
     
-    console.log(req.params);
-    
+    console.log(Date.now());
     
     const desdeFinal = moment.utc((horaInicio) ? `${desde}T${horaInicio}:00` : desde);
     const hastaFinal = moment.utc((horaFin) ? `${hasta}T${horaFin}:59`: addDays(hasta, 1));
-
-    console.log(desdeFinal, hastaFinal);
     
     const logSearched = await SensoresLogModel.find({
         idPecera,

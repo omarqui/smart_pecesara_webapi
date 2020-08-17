@@ -32,7 +32,7 @@ exports.updateConfigFromBody = async function (req, res) {
     if (!newConfig.estadoActuadores) delete newConfig.estadoActuadores;
     
     await ConfiguracionModel.updateOne({ idPecera }, newConfig);
-    console.log(idPecera);
+
     const updatedConfig = await ConfiguracionModel.findOne({ idPecera });
 
     res.json(getSimpleConfig(updatedConfig));
