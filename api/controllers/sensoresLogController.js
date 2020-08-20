@@ -31,6 +31,7 @@ exports.getSensoresLogBetweenDates = async function (req, res) {
     const desdeFinal = moment.utc((horaInicio) ? `${desde}T${horaInicio}:00` : desde);
     const hastaFinal = moment.utc((horaFin) ? `${hasta}T${horaFin}:59`: addDays(hasta, 1));
     console.log(desdeFinal);
+    console.log(desdeFinal.format());
     console.log(`${desde}T${horaInicio}:00`);
     
     const logSearched = await SensoresLogModel.find({
