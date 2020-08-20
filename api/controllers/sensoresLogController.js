@@ -36,7 +36,7 @@ exports.getSensoresLogBetweenDates = async function (req, res) {
     
     const logSearched = await SensoresLogModel.find({
         idPecera,
-        creadoEl: {
+        createOn: {
             $gte: desdeFinal.format(),
             $lt: hastaFinal.format()
         }
