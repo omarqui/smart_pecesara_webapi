@@ -9,6 +9,9 @@ var SensoresLogSchema = new Schema({
   createOn: {
     type: Date,    
   },
+  creadoEl: {
+    type: Date,    
+  },
   nivel: {
     type: String
   },

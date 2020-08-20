@@ -30,10 +30,12 @@ exports.getSensoresLogBetweenDates = async function (req, res) {
     
     const desdeFinal = moment.utc((horaInicio) ? `${desde}T${horaInicio}:00` : desde);
     const hastaFinal = moment.utc((horaFin) ? `${hasta}T${horaFin}:59`: addDays(hasta, 1));
+    console.log(desdeFinal);
+    console.log(`${desde}T${horaInicio}:00`);
     
     const logSearched = await SensoresLogModel.find({
         idPecera,
-        createOn: {
+        creadoEl: {
             $gte: desdeFinal,
             $lt: hastaFinal
         }
@@ -61,10 +63,9 @@ exports.saveSensoresLogFromBody = async function (req, res) {
     let newLog = Object.assign({}, req.body);
     if (newLog.hasOwnProperty("_id")) newLog._id = undefined;
     
-    newLog.createOn = Date.now();
+    newLog.createOn = Date.now();        
     const log = new SensoresLogModel(newLog);
-    console.log(Date.now());    
-    
+    console.log(Date.now());        
     console.log(log);
     
     await log.save();
