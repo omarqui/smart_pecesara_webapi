@@ -47,7 +47,8 @@ exports.getSensoresLogBetweenDates = async function (req, res) {
         l.createOn = moment.utc(l.createOn).local().format();
         return l;
     })
-
+    console.log(logSearched);
+    
     res.json(logSearched);
 };
 
