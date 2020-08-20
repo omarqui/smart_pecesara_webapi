@@ -40,16 +40,12 @@ exports.getSensoresLogBetweenDates = async function (req, res) {
     }).sort({
         createOn: -1 
     });
-    
-    const logResult = logSearched.map(l=>{
-        console.log(l.createOn);
-        console.log(moment.utc(l.createOn).local().format());
-        l.createOn = moment.utc(l.createOn).local().format();
-        return l;
-    });
 
-    
-    console.log(logResult);
+    const logResult = logSearched.map(log=>{
+        let newLog = Object.assign({}, log.toObject());
+        newLog.createOn = moment.utc(log.createOn).local().format();
+        return newLog;
+    });
     
     res.json(logResult);
 };
