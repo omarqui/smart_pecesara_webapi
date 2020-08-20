@@ -28,9 +28,8 @@ exports.getSensoresLogById = async function (req, res) {
 exports.getSensoresLogBetweenDates = async function (req, res) {
     const { desde, hasta, idPecera, horaInicio, horaFin } = req.params;
     
-    const desdeFinal = moment.utc((horaInicio) ? `${desde}T${horaInicio}:00` : desde);
-    const hastaFinal = moment.utc((horaFin) ? `${hasta}T${horaFin}:59`: addDays(hasta, 1));
-    console.log(desdeFinal);
+    const desdeFinal = moment.utc((horaInicio) ? `${desde}T${horaInicio}:00-04:00` : desde);
+    const hastaFinal = moment.utc((horaFin) ? `${hasta}T${horaFin}:59-04:00`: addDays(hasta, 1));    
     console.log(desdeFinal.format());
     console.log(`${desde}T${horaInicio}:00`);
     
