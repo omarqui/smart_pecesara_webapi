@@ -11,8 +11,9 @@ const $project = {
 class PeceraController {
     async getPecera(req, res) {
         const list = await dbService.aggregate([{$project}]);
+        
         const listConvert = list.map(pecera=>{
-            let newPec = Object.assign({}, pecera.toObject());
+            let newPec = Object.assign({}, pecera);
             newPec.createOn = moment.utc(pecera.createOn).local().format();
             return newPec;
         });
