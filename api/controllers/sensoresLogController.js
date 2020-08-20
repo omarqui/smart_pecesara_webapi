@@ -40,16 +40,18 @@ exports.getSensoresLogBetweenDates = async function (req, res) {
     }).sort({
         createOn: -1 
     });
-
-    logSearched = logSearched.map(l=>{
+    
+    const logResult = logSearched.map(l=>{
         console.log(l.createOn);
         console.log(moment.utc(l.createOn).local().format());
         l.createOn = moment.utc(l.createOn).local().format();
         return l;
-    })
-    console.log(logSearched);
+    });
+
     
-    res.json(logSearched);
+    console.log(logResult);
+    
+    res.json(logResult);
 };
 
 exports.getSensoresLogActual = async function (req, res) {
@@ -71,8 +73,6 @@ exports.saveSensoresLogFromBody = async function (req, res) {
     
     newLog.createOn = Date.now();        
     const log = new SensoresLogModel(newLog);
-    console.log(Date.now());        
-    console.log(log);
     
     await log.save();
 
